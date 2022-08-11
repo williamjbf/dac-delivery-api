@@ -5,10 +5,10 @@ import com.github.williamjbf.dacdeliveryapi.empresa.repository.EmpresaRepository
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.websocket.server.PathParam;
+import java.util.List;
 
 @RestController
 @RequestMapping("/empresas")
@@ -21,5 +21,22 @@ public class EmpresaResource {
     public ResponseEntity<Empresa> create(@RequestBody Empresa empresa){
         final Empresa empresaSalva = repository.save(empresa);
         return ResponseEntity.status(HttpStatus.CREATED).body(empresaSalva);
+    }
+    @GetMapping
+    public List<Empresa> listAll(){
+        return repository.findAll();
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<Empresa> update(@RequestBody Empresa empresa, @PathVariable("id") Long id){
+         // repository.saveAndFlush(empresa);
+        empresa.setId(id);
+        final Empresa empresaAtualizada = repository.save(empresa);
+        return ResponseEntity.status(HttpStatus.OK).body(empresaAtualizada);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void remove(@PathVariable("id") Long id){
+        repository.deleteById(id);
     }
 }
