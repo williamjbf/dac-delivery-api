@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Data
-@SequenceGenerator(name ="seq_emprese_id", allocationSize = 1)
+@SequenceGenerator(name ="seq_empresa_id", allocationSize = 1)
 public class Empresa {
 
     @Id
