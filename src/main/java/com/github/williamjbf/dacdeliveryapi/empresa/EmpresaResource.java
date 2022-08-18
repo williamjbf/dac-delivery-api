@@ -25,6 +25,7 @@ public class EmpresaResource {
     public List<Empresa> listAll(){
         return repository.findAll();
     }
+
     @PutMapping("/{cnpj}")
     public ResponseEntity<Empresa> update(@RequestBody Empresa empresa, @PathVariable("cnpj") String cnpj){
         empresa.setCnpj(cnpj);
@@ -34,7 +35,7 @@ public class EmpresaResource {
 
     @DeleteMapping("/{cnpj}")
     @ResponseStatus(HttpStatus.OK)
-    public void remove(@PathVariable("cnpj") Long id){
+    public void remove(@PathVariable("cnpj") String id){
         repository.deleteById(id);
     }
 }
