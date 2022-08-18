@@ -6,12 +6,12 @@ import javax.persistence.*;
 
 @Entity
 @Data
-@SequenceGenerator(name ="seq_empresa_id", allocationSize = 1)
 public class Empresa {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_empresa_id")
-    private long id;
+    private String cnpj;
     private String nome;
     private String telefone;
+    @Embedded
+    private Endereco endereco;
 }

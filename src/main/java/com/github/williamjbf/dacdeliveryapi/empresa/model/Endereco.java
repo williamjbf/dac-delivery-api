@@ -1,17 +1,14 @@
-package com.github.williamjbf.dacdeliveryapi.endereco.model;
+package com.github.williamjbf.dacdeliveryapi.empresa.model;
 
 import com.vividsolutions.jts.geom.Geometry;
 import lombok.Data;
 
 import javax.persistence.*;
 
-@Entity
+@Embeddable
 @Data
-@SequenceGenerator(name ="seq_endereco_id", allocationSize = 1)
 public class Endereco {
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_endereco_id")
-    private long id;
+
     private String rua;
     private String numero;
     private String complemento;

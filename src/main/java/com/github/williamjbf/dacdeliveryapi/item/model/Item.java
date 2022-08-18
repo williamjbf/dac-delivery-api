@@ -1,8 +1,10 @@
 package com.github.williamjbf.dacdeliveryapi.item.model;
 
+import com.github.williamjbf.dacdeliveryapi.pedido.model.ItemPedido;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Data
@@ -17,4 +19,7 @@ public class Item {
     private String imagem;
     private float valorUnitario;
     private String ingredientes;
+
+    @OneToMany(mappedBy = "item")
+    private Set<ItemPedido> pedidos;
 }
