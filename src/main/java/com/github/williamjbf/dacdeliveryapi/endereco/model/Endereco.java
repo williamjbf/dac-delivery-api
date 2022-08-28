@@ -1,7 +1,8 @@
 package com.github.williamjbf.dacdeliveryapi.endereco.model;
 
-import com.vividsolutions.jts.geom.Geometry;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+import com.vividsolutions.jts.geom.Geometry;
 
 import javax.persistence.*;
 
@@ -19,5 +20,6 @@ public class Endereco {
     private String cidade;
     private String uf;
     private Geometry pontoGeo;
-
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String id_referencia;
 }

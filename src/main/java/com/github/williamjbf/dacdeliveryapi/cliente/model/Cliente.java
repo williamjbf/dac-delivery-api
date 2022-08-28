@@ -1,6 +1,7 @@
 package com.github.williamjbf.dacdeliveryapi.cliente.model;
 
 import com.github.williamjbf.dacdeliveryapi.endereco.model.Endereco;
+import com.github.williamjbf.dacdeliveryapi.pedido.model.Pedido;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -25,4 +26,8 @@ public class Cliente {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name="id_referencia")
     private List<Endereco> enderecos;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name="id_cliente")
+    private List<Pedido> pedidos;
 }

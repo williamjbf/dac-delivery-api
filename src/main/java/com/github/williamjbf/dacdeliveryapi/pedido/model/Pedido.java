@@ -1,5 +1,6 @@
 package com.github.williamjbf.dacdeliveryapi.pedido.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.williamjbf.dacdeliveryapi.endereco.model.Endereco;
 import lombok.Data;
 import lombok.Getter;
@@ -8,6 +9,9 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -18,18 +22,30 @@ public class Pedido {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-
     private LocalDateTime dataHora;
-    private int quantItem;
     private StatusPedido status;
-    private BigDecimal valorTotal;
-    private BigDecimal frete;
-    private BigDecimal troco;
+    private float valorTotal;
+    private float frete;
+    private float troco;
     private FormaPagamento formaPagamento;
-
     @ManyToOne
     private Endereco enderecoCliente;
-
+    @JsonIgnore
+    private String id_cliente;
+    @JsonIgnore
+    private String id_empresa;
     @OneToMany(mappedBy = "pedido")
-    Set<ItemPedido> itens;
+    List<ItemPedido> itens;
+
+    public Pedido(){
+        this.dataHora = LocalDateTime.now();
+        status = StatusPedido.PENDENTE;
+        this.itens = new ArrayList<>();
+        this.frete = 10;
+        this.valorTotal = 0;
+    }
+
+    public void adicionarItem(ItemPedido itemPedido){
+        this.itens.add(itemPedido);
+    }
 }

@@ -2,6 +2,7 @@ package com.github.williamjbf.dacdeliveryapi.empresa;
 
 import com.github.williamjbf.dacdeliveryapi.empresa.model.Empresa;
 import com.github.williamjbf.dacdeliveryapi.empresa.repository.EmpresaRepository;
+import com.github.williamjbf.dacdeliveryapi.empresa.service.EmpresaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,9 +17,12 @@ public class EmpresaResource {
     @Autowired
     private EmpresaRepository repository;
 
+    @Autowired
+    private EmpresaService service;
+
     @PostMapping
     public ResponseEntity<Empresa> create(@RequestBody Empresa empresa){
-        final Empresa empresaSalva = repository.save(empresa);
+        final Empresa empresaSalva = service.save(empresa);
         return ResponseEntity.status(HttpStatus.CREATED).body(empresaSalva);
     }
     @GetMapping

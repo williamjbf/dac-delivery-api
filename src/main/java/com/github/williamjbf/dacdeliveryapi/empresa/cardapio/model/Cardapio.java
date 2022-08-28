@@ -1,5 +1,6 @@
 package com.github.williamjbf.dacdeliveryapi.empresa.cardapio.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.williamjbf.dacdeliveryapi.empresa.model.Empresa;
 import com.github.williamjbf.dacdeliveryapi.item.model.Item;
 import lombok.Getter;
@@ -17,6 +18,7 @@ public class Cardapio {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @OneToOne
+    @JsonIgnore
     private Empresa empresa;
 
     @OneToMany(cascade = CascadeType.ALL)
