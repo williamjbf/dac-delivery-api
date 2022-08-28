@@ -20,6 +20,7 @@ public class Cliente {
     private String foto;
     private LocalDate dataNasc;
     private String telefone;
+    @Column(unique = true)
     private String email;
     private String senha;
 
