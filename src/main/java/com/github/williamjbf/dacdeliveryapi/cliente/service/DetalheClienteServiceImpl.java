@@ -1,4 +1,4 @@
-package com.github.williamjbf.dacdeliveryapi.service;
+package com.github.williamjbf.dacdeliveryapi.cliente.service;
 
 import com.github.williamjbf.dacdeliveryapi.cliente.DetalheClienteData;
 import com.github.williamjbf.dacdeliveryapi.cliente.model.Cliente;

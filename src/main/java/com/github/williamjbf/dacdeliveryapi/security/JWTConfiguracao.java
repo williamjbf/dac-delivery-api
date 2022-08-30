@@ -1,6 +1,6 @@
 package com.github.williamjbf.dacdeliveryapi.security;
 
-import com.github.williamjbf.dacdeliveryapi.service.DetalheClienteServiceImpl;
+import com.github.williamjbf.dacdeliveryapi.cliente.service.DetalheClienteServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -19,6 +19,11 @@ public class JWTConfiguracao extends WebSecurityConfigurerAdapter {
     private final DetalheClienteServiceImpl clienteService;
     private final PasswordEncoder passwordEncoder;
 
+    private static final String[] AUTH_WHITELIST = {
+            "/login",
+            "/empresas",
+            "/itens"
+    };
 
     public JWTConfiguracao(DetalheClienteServiceImpl clienteService, PasswordEncoder passwordEncoder) {
         this.clienteService = clienteService;
@@ -33,7 +38,8 @@ public class JWTConfiguracao extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/login").permitAll()
+                .antMatchers(AUTH_WHITELIST).permitAll()
+                .antMatchers(HttpMethod.POST,"/clientes").permitAll()
                 .anyRequest().authenticated()
                 .and().addFilter(new JWTAutenticarFilter(authenticationManager()))
                 .addFilter(new JWTValidarFilter(authenticationManager()))

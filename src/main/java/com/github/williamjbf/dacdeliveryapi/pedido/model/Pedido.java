@@ -16,11 +16,10 @@ import java.util.Set;
 
 @Entity
 @Data
-@Getter
-@Setter
+@SequenceGenerator(name ="seq_pedido_id", allocationSize = 1)
 public class Pedido {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator ="seq_pedido_id")
     private long id;
     private LocalDateTime dataHora;
     private StatusPedido status;
