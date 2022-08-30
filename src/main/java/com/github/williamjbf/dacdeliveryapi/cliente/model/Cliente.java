@@ -1,5 +1,6 @@
 package com.github.williamjbf.dacdeliveryapi.cliente.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.williamjbf.dacdeliveryapi.endereco.model.Endereco;
 import com.github.williamjbf.dacdeliveryapi.pedido.model.Pedido;
 import lombok.Data;
@@ -22,6 +23,7 @@ public class Cliente {
     private String telefone;
     @Column(unique = true)
     private String email;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String senha;
 
     @OneToMany(cascade = CascadeType.ALL)

@@ -2,10 +2,10 @@ package com.github.williamjbf.dacdeliveryapi.cliente;
 
 import com.github.williamjbf.dacdeliveryapi.cliente.model.Cliente;
 import com.github.williamjbf.dacdeliveryapi.cliente.repository.ClienteRepository;
-import com.github.williamjbf.dacdeliveryapi.empresa.model.Empresa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,6 +17,11 @@ public class ClienteResource {
 
     @Autowired
     private ClienteRepository repository;
+    private final PasswordEncoder encoder;
+
+    public ClienteResource(PasswordEncoder encoder) {
+        this.encoder = encoder;
+    }
 
     @GetMapping("/{cpf}")
     public ResponseEntity<Cliente> find(@PathVariable("cpf") String cpf){
@@ -31,6 +36,7 @@ public class ClienteResource {
 
     @PostMapping
     public ResponseEntity<Cliente> create(@RequestBody Cliente cliente){
+        cliente.setSenha(encoder.encode(cliente.getSenha()));
         final Cliente ClienteSalvo = repository.save(cliente);
         return ResponseEntity.status(HttpStatus.CREATED).body(ClienteSalvo);
     }
