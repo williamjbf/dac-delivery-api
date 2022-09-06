@@ -2,6 +2,7 @@ package com.github.williamjbf.dacdeliveryapi.cliente;
 
 import com.github.williamjbf.dacdeliveryapi.cliente.model.Cliente;
 import com.github.williamjbf.dacdeliveryapi.cliente.repository.ClienteRepository;
+import com.github.williamjbf.dacdeliveryapi.exception.ClienteNaoExisteException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,14 +49,15 @@ public class ClienteResource {
             final Cliente clienteAtualizado = repository.save(cliente);
             return ResponseEntity.status(HttpStatus.OK).body(clienteAtualizado);
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        throw new ClienteNaoExisteException(cpf);
     }
 
     @DeleteMapping("/{cpf}")
-    public ResponseEntity delete(@PathVariable("cpf") String cpf){
-        if(repository.findById(cpf).isPresent()){
+    public ResponseEntity delete(@PathVariable("cpf") String cpf) {
+        if (repository.findById(cpf).isPresent()) {
             repository.deleteById(cpf);
             return ResponseEntity.status(HttpStatus.OK).build();
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();}
+        throw new ClienteNaoExisteException(cpf);
+    }
 }
