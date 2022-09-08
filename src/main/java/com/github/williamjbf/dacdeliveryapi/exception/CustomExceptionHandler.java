@@ -32,4 +32,35 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler   {
         return new ResponseEntity<Object>(apiError,new HttpHeaders(), apiError.getStatus());
     }
 
+    @ExceptionHandler({PedidoNaoExisteException.class})
+    public ResponseEntity<Object> handlerPedidoNaoExisteException(PedidoNaoExisteException ex,
+                                                                   WebRequest request){
+        String userMessage = messageSource.getMessage("pedido.nao.encontrado", new String[]{ex.getId().toString()}, LocaleContextHolder.getLocale());
+        String devMessage = ExceptionUtils.getRootCauseMessage(ex);
+
+        ApiError apiError = new ApiError(HttpStatus.NOT_FOUND, userMessage, devMessage);
+        return new ResponseEntity<Object>(apiError,new HttpHeaders(), apiError.getStatus());
+    }
+
+    @ExceptionHandler({EnderecoNaoExisteException.class})
+    public ResponseEntity<Object> handlerEnderecoNaoExisteException(EnderecoNaoExisteException ex,
+                                                                  WebRequest request){
+        String userMessage = messageSource.getMessage("endereco.nao.encontrado", new String[]{ex.getId().toString()}, LocaleContextHolder.getLocale());
+        String devMessage = ExceptionUtils.getRootCauseMessage(ex);
+
+        ApiError apiError = new ApiError(HttpStatus.NOT_FOUND, userMessage, devMessage);
+        return new ResponseEntity<Object>(apiError,new HttpHeaders(), apiError.getStatus());
+    }
+
+    @ExceptionHandler({ItemNaoExisteException.class})
+    public ResponseEntity<Object> handlerItemNaoExisteException(ItemNaoExisteException ex,
+                                                                    WebRequest request){
+        String userMessage = messageSource.getMessage("item.nao.encontrado", new String[]{ex.getId().toString()}, LocaleContextHolder.getLocale());
+        String devMessage = ExceptionUtils.getRootCauseMessage(ex);
+
+        ApiError apiError = new ApiError(HttpStatus.NOT_FOUND, userMessage, devMessage);
+        return new ResponseEntity<Object>(apiError,new HttpHeaders(), apiError.getStatus());
+    }
+
+
 }

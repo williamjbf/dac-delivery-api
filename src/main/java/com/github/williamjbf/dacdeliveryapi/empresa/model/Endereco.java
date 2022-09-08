@@ -4,17 +4,40 @@ import com.vividsolutions.jts.geom.Geometry;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Embeddable
 @Data
 public class Endereco {
 
+    @NotNull(message = "rua inválida, null")
+    @NotEmpty(message = "rua inválida, vazio")
     private String rua;
+
+    @NotNull(message = "numero inválido, null")
+    @NotEmpty(message = "numero inválido, vazio")
     private String numero;
+
+    @NotNull(message = "complemento, null")
+    @NotEmpty(message = "complemento inválido, vazio")
     private String complemento;
+
+    @NotNull(message = "cep inválido, null")
+    @NotEmpty(message = "cep inválido, vazio")
     private String cep;
+
+    @NotNull(message = "cidade inválida, null")
+    @NotEmpty(message = "cidade inválida, vazio")
     private String cidade;
+
+    @NotNull(message = "uf inválida, null")
+    @NotEmpty(message = "uf inválida, vazio")
+    @Size(max = 2, message = "unidade federativa inválida")
     private String uf;
+
     private Geometry pontoGeo;
 
 }

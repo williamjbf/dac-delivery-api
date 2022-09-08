@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,14 +37,14 @@ public class ClienteResource {
     }
 
     @PostMapping
-    public ResponseEntity<Cliente> create(@RequestBody Cliente cliente){
+    public ResponseEntity<Cliente> create(@Valid @RequestBody Cliente cliente){
         cliente.setSenha(encoder.encode(cliente.getSenha()));
         final Cliente ClienteSalvo = repository.save(cliente);
         return ResponseEntity.status(HttpStatus.CREATED).body(ClienteSalvo);
     }
 
     @PutMapping("/{cpf}")
-    public ResponseEntity<Cliente> update(@RequestBody Cliente cliente, @PathVariable("cpf") String cpf){
+    public ResponseEntity<Cliente> update(@Valid @RequestBody Cliente cliente, @PathVariable("cpf") String cpf){
         if(repository.findById(cpf).isPresent()){
             cliente.setCpf(cpf);
             final Cliente clienteAtualizado = repository.save(cliente);

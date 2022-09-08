@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,13 +35,13 @@ public class EnderecoResource {
     }
 
     @PostMapping
-    public ResponseEntity<Endereco> create(@RequestBody Endereco endereco){
+    public ResponseEntity<Endereco> create(@Valid @RequestBody Endereco endereco){
         final Endereco EnderecoSalvo = service.save(endereco);
         return ResponseEntity.status(HttpStatus.CREATED).body(EnderecoSalvo);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Endereco> update(@RequestBody Endereco endereco, @PathVariable("id") Long id){
+    public ResponseEntity<Endereco> update(@Valid @RequestBody Endereco endereco, @PathVariable("id") Long id){
         return service.update(endereco, id);
     }
 

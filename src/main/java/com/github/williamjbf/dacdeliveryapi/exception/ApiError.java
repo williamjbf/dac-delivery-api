@@ -25,4 +25,5 @@ public class ApiError {
         this.resumo = resumo;
         this.errors = Arrays.asList(messagemErro);
     }
+
 }

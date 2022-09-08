@@ -1,6 +1,9 @@
 package com.github.williamjbf.dacdeliveryapi.pedido.service;
 
+import com.github.williamjbf.dacdeliveryapi.endereco.model.Endereco;
 import com.github.williamjbf.dacdeliveryapi.endereco.repository.EnderecoRepository;
+import com.github.williamjbf.dacdeliveryapi.exception.EnderecoNaoExisteException;
+import com.github.williamjbf.dacdeliveryapi.exception.ItemNaoExisteException;
 import com.github.williamjbf.dacdeliveryapi.item.model.Item;
 import com.github.williamjbf.dacdeliveryapi.item.repository.ItemRepository;
 import com.github.williamjbf.dacdeliveryapi.pedido.dto.PedidoDto;
@@ -13,6 +16,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PedidoService {
@@ -29,7 +33,11 @@ public class PedidoService {
     @Transactional(propagation = Propagation.REQUIRED)
     public Pedido save(PedidoDto pedidoDto){
         Pedido pedido = new Pedido();
-        pedido.setEnderecoCliente(enderecoRepository.findById(pedidoDto.getIdEndereco()).get());
+        Optional<Endereco> endereco = enderecoRepository.findById(pedidoDto.getIdEndereco());
+        if (!endereco.isPresent()){
+            throw new EnderecoNaoExisteException(pedidoDto.getIdEndereco());
+        }
+        pedido.setEnderecoCliente(endereco.get());
         pedido.setFormaPagamento(pedidoDto.getFormaPagamento());
         pedido.setTroco(pedidoDto.getTroco());
         pedido.setId_cliente(pedidoDto.getCpfCliente());
@@ -43,7 +51,11 @@ public class PedidoService {
             pedidoKey.setItemId(itemPedido.getId().getItemId());
             itemPedido.setId(pedidoKey);
             itemPedido.setPedido(pedidoSalvo);
-            itemPedido.setItem(itemRepository.findById(pedidoKey.getItemId()).get());
+            Optional<Item> item = itemRepository.findById(pedidoKey.getItemId());
+            if (!item.isPresent()){
+                throw new ItemNaoExisteException(pedidoKey.getItemId());
+            }
+            itemPedido.setItem(item.get());
             itemPedidoRepository.save(itemPedido);
             pedidoSalvo.adicionarItem(itemPedido);
         }

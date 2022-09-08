@@ -7,6 +7,7 @@ import com.github.williamjbf.dacdeliveryapi.pedido.model.ItemPedido;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.lang.reflect.Array;
 import java.util.List;
 import java.util.Set;
@@ -18,7 +19,6 @@ public class Item {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_item_id")
-
     private long id;
     private String nome;
     private String imagem;

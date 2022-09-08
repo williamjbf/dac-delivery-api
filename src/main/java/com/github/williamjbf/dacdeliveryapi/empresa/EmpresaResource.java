@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -21,7 +22,7 @@ public class EmpresaResource {
     private EmpresaService service;
 
     @PostMapping
-    public ResponseEntity<Empresa> create(@RequestBody Empresa empresa){
+    public ResponseEntity<Empresa> create(@Valid @RequestBody Empresa empresa){
         final Empresa empresaSalva = service.save(empresa);
         return ResponseEntity.status(HttpStatus.CREATED).body(empresaSalva);
     }
@@ -31,7 +32,7 @@ public class EmpresaResource {
     }
 
     @PutMapping("/{cnpj}")
-    public ResponseEntity<Empresa> update(@RequestBody Empresa empresa, @PathVariable("cnpj") String cnpj){
+    public ResponseEntity<Empresa> update(@Valid @RequestBody Empresa empresa, @PathVariable("cnpj") String cnpj){
         empresa.setCnpj(cnpj);
         final Empresa empresaAtualizada = repository.save(empresa);
         return ResponseEntity.status(HttpStatus.OK).body(empresaAtualizada);
